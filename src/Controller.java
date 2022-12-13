@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 import java.io.*;
 
 public class Controller {
+
     static Alphabet alphabet = new Alphabet();
     private StringBuilder cryptoText;
     @FXML
@@ -51,7 +52,7 @@ public class Controller {
 
     public String directorySave(){
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Choose directory");
+        fileChooser.setTitle("Choose directory for save");
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Text file", "*.txt"));
         File selectedFile = fileChooser.showSaveDialog(new Stage());
         return selectedFile.getPath();
@@ -88,7 +89,7 @@ public class Controller {
             writer.write(crypto + "\r\n");
             setNotification("File saved: " + directory, "GREEN");
         }catch (IOException e){
-            setNotification("Failed to create file", "RED");
+            setNotification("Failed to create file, try change directory", "RED");
         }
     }
 

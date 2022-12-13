@@ -1,27 +1,12 @@
-import java.util.HashMap;
-
 public class Alphabet {
-    static char[] alphabet = "abcdefghijklmnopqrstuvwxyz".toCharArray();
-    //TwoWayMap
-    final private HashMap<Integer, Character> keyNumber = new HashMap<>();
-    final private HashMap<Character, Integer> keyLetter = new HashMap<>();
+    final private static char[] alphabet = "abcdefghijklmnopqrstuvwxyz".toCharArray();
+    final private static char[] punctuation = ".,\":!? ".toCharArray();
 
-    public Alphabet(){
-        for (int i = 0; i < 26; i++)
-            setValue(i, alphabet[i]);
-    }
-
-    public char getSymbol(int position) {
-        return keyNumber.get(position);
-    }
-
-    public void setValue(int x, char y) {
-        this.keyNumber.put(x, y);
-        this.keyLetter.put(y, x);
-    }
-
-    public int getPosition(char symbol) {
-        return Character.toLowerCase(keyLetter.get(symbol));
+    public int getPosition(char symbol, char[] array) {
+        for (int i = 0; i < array.length; i++)
+            if (array[i] == Character.toLowerCase(symbol))
+                return i;
+        return -1;
     }
 
     public char symbolShift(char symbol, int shift){
@@ -29,12 +14,14 @@ public class Alphabet {
             int number = Integer.parseInt(String.valueOf(symbol)) + shift;
             return (char) (((10 + number % 10) % 10) + '0');
         }
-        if(Character.isUpperCase(symbol))
-            return Character.toUpperCase((getSymbol((26 + (getPosition(Character.toLowerCase(symbol)) + shift)) % 26)));
-        else if (Character.isLowerCase(symbol))
-            return (getSymbol((26 + (getPosition(Character.toLowerCase(symbol)) + shift)) % 26));
+        if(Character.isLetter(symbol)) {
+            char symbolShift = alphabet[(26 + getPosition(symbol, alphabet) + shift) % 26];
+            return Character.isUpperCase(symbol) ? Character.toUpperCase(symbolShift) : symbolShift;
+        }
+        if (getPosition(symbol, punctuation) != -1)
+            return punctuation[(7 + getPosition(symbol, punctuation) + shift % 7) % 7];
 
-        else return symbol;
+        return symbol;
     }
 
 }
