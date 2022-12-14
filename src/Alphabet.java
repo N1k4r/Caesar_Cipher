@@ -1,10 +1,9 @@
 public class Alphabet {
-    final private static char[] alphabet = "abcdefghijklmnopqrstuvwxyz".toCharArray();
-    final private static char[] punctuation = ".,\":!? ".toCharArray();
+    final private static char[] alphabet = "abcdefghijklmnopqrstuvwxyz.,\":!? ".toCharArray();
 
-    public int getPosition(char symbol, char[] array) {
-        for (int i = 0; i < array.length; i++)
-            if (array[i] == Character.toLowerCase(symbol))
+    private int getPosition(char symbol) {
+        for (int i = 0; i < alphabet.length; i++)
+            if (alphabet[i] == Character.toLowerCase(symbol))
                 return i;
         return -1;
     }
@@ -14,13 +13,10 @@ public class Alphabet {
             int number = Integer.parseInt(String.valueOf(symbol)) + shift;
             return (char) (((10 + number % 10) % 10) + '0');
         }
-        if(Character.isLetter(symbol)) {
-            char symbolShift = alphabet[(26 + getPosition(symbol, alphabet) + shift) % 26];
+        if(getPosition(symbol) != -1) {
+            char symbolShift = alphabet[(alphabet.length + getPosition(symbol) + shift) % alphabet.length];
             return Character.isUpperCase(symbol) ? Character.toUpperCase(symbolShift) : symbolShift;
         }
-        if (getPosition(symbol, punctuation) != -1)
-            return punctuation[(7 + getPosition(symbol, punctuation) + shift % 7) % 7];
-
         return symbol;
     }
 

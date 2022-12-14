@@ -10,6 +10,7 @@ import java.io.*;
 public class Controller {
 
     static Alphabet alphabet = new Alphabet();
+    BruteForce bruteForce = new BruteForce();
     private StringBuilder cryptoText;
     @FXML
     private TextField textKey;
@@ -37,7 +38,7 @@ public class Controller {
 
     public void bruteForce() {
         if (connectFile())
-            fileWrite(-26,25);
+            fileWrite(-33,32);
     }
 
     public void encrypt() {
@@ -65,7 +66,7 @@ public class Controller {
 
     public int getKey(){
         try {
-            int num = Math.abs(Integer.parseInt(textKey.getText())) % 26;
+            int num = Math.abs(Integer.parseInt(textKey.getText())) % 33;
             if (num != 0)
                 return num;
             else {
@@ -80,15 +81,27 @@ public class Controller {
 
     public void fileWrite(int key, int mode){
         String directory = directorySave();
+        String notificationKey = "";
         try(BufferedWriter writer = new BufferedWriter(new FileWriter(directory))){
             StringBuilder crypto = new StringBuilder();
-            for (int k = mode; k > -1; k--)
+
+            for (int k = mode; k > -1; k--) {
                 for (int i = 0; i < cryptoText.length(); i++)
                     crypto.append(alphabet.symbolShift(cryptoText.charAt(i), key + k));
 
-            writer.write(crypto + "\r\n");
-            setNotification("File saved: " + directory, "GREEN");
-        }catch (IOException e){
+                if (mode == 32)
+                    if (bruteForce.autoKey(String.valueOf(crypto))) {
+                        notificationKey = "key = " + Math.abs(key + k);
+                        break;
+                    } else
+                        crypto.setLength(0);
+            }
+            if (crypto.length() > 0) {
+                writer.write(String.valueOf(crypto));
+                setNotification("File saved! " + notificationKey, "GREEN");
+            } else
+                setNotification("Incorrect text formatting", "RED");
+        } catch (IOException e) {
             setNotification("Failed to create file, try change directory", "RED");
         }
     }
