@@ -8,38 +8,38 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
     <Text layoutX="141.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Caesar Cipher" textAlignment="CENTER" wrappingWidth="313.0">
         <font>
             <Font name="Aparajita Bold" size="51.0" />
         </font>
     </Text>
-    <TextField fx:id="textKey" layoutX="45.0" layoutY="188.0" prefHeight="36.0" prefWidth="160.0" promptText="Shift/Key (number)" style="-fx-background-radius: 22;">
+    <TextField fx:id="textKey" alignment="CENTER" layoutX="29.0" layoutY="226.0" prefHeight="39.0" prefWidth="146.0" promptText="Shift/Key" style="-fx-background-radius: 22;" AnchorPane.topAnchor="235.0">
         <font>
-            <Font size="16.0" />
+            <Font size="18.0" />
         </font>
     </TextField>
-    <TextField fx:id="textPath" layoutX="44.0" layoutY="137.0" prefHeight="36.0" prefWidth="323.0" promptText="File path" style="-fx-background-radius: 22;" AnchorPane.leftAnchor="45.0" AnchorPane.rightAnchor="232.0">
+    <TextField fx:id="textPath" layoutX="29.0" layoutY="137.0" prefHeight="39.0" prefWidth="360.0" promptText="File path" style="-fx-background-radius: 22;" AnchorPane.leftAnchor="29.0" AnchorPane.rightAnchor="211.0">
         <font>
-            <Font size="16.0" />
+            <Font size="18.0" />
         </font>
     </TextField>
-    <Button layoutX="217.0" layoutY="188.0" mnemonicParsing="false" onAction="#encrypt" prefHeight="36.0" prefWidth="153.0" style="-fx-background-radius: 22;" text="Encrypt" AnchorPane.rightAnchor="232.0">
+    <Button layoutX="184.0" layoutY="235.0" mnemonicParsing="false" onAction="#encrypt" prefHeight="39.0" prefWidth="166.0" style="-fx-background-radius: 22;" text="Encrypt" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="235.0">
         <font>
             <Font name="System Bold" size="14.0" />
         </font>
     </Button>
-    <Button layoutX="381.0" layoutY="188.0" mnemonicParsing="false" onAction="#decrypt" prefHeight="36.0" prefWidth="174.0" style="-fx-background-radius: 22;" text="Decrypt (key)" AnchorPane.leftAnchor="381.0" AnchorPane.rightAnchor="45.0">
+    <Button layoutX="358.0" layoutY="235.0" mnemonicParsing="false" onAction="#decrypt" prefHeight="39.0" prefWidth="213.0" style="-fx-background-radius: 22;" text="Decrypt (key)" AnchorPane.leftAnchor="358.0" AnchorPane.rightAnchor="29.0" AnchorPane.topAnchor="235.0">
         <font>
             <Font name="System Bold" size="14.0" />
         </font>
     </Button>
-    <Button layoutX="388.0" layoutY="137.0" mnemonicParsing="false" onAction="#bruteForce" prefHeight="36.0" prefWidth="174.0" style="-fx-background-radius: 22;" text="Decrypt (Brute Force)" AnchorPane.leftAnchor="381.0" AnchorPane.rightAnchor="45.0">
+    <Button layoutX="385.0" layoutY="137.0" mnemonicParsing="false" onAction="#bruteForce" prefHeight="39.0" prefWidth="174.0" style="-fx-background-radius: 22;" text="Decrypt (Brute Force)" AnchorPane.rightAnchor="29.0">
         <font>
             <Font name="System Bold" size="14.0" />
         </font>
     </Button>
-    <Text fx:id="textNotification" fill="RED" layoutX="139.0" layoutY="269.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="306.0">
+    <Text fx:id="textNotification" fill="RED" layoutX="145.0" layoutY="319.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="306.0">
         <font>
             <Font size="14.0" />
         </font>
@@ -57,4 +57,14 @@
             <Font size="14.0" />
         </font>
     </TextArea>
+    <Button layoutX="358.0" layoutY="184.0" mnemonicParsing="false" onAction="#staticalAnalysis" prefHeight="39.0" prefWidth="213.0" style="-fx-background-radius: 22;" text="Decrypt (statistical analysis)" AnchorPane.topAnchor="186.0">
+        <font>
+            <Font name="System Bold" size="14.0" />
+        </font>
+    </Button>
+    <TextField fx:id="textPathAnalysis" layoutX="29.0" layoutY="176.0" prefHeight="39.0" prefWidth="321.0" promptText="File path for additional analysis" style="-fx-background-radius: 22;" AnchorPane.topAnchor="186.0">
+        <font>
+            <Font size="18.0" />
+        </font>
+    </TextField>
 </AnchorPane>

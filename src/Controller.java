@@ -8,12 +8,13 @@ import javafx.stage.Stage;
 import java.io.*;
 
 public class Controller {
-
-    static Alphabet alphabet = new Alphabet();
     BruteForce bruteForce = new BruteForce();
-    private StringBuilder cryptoText;
+    private StringBuilder cryptoText = new StringBuilder();
+    private StringBuilder textForAnalysis = new StringBuilder();
     @FXML
     private TextField textKey;
+    @FXML
+    private TextField textPathAnalysis;
     @FXML
     private Text textNotification;
     @FXML
@@ -21,11 +22,11 @@ public class Controller {
     @FXML
     private TextField textPath;
 
-    private boolean connectFile(){
-        try (BufferedReader reader = new BufferedReader(new FileReader(textPath.getText()))){
-            cryptoText = new StringBuilder();
+    private boolean connectFile(TextField textField, StringBuilder text){
+        text.setLength(0);
+        try (BufferedReader reader = new BufferedReader(new FileReader(textField.getText()))){
             while (reader.ready())
-                cryptoText.append(reader.readLine()).append("\r\n");
+                text.append(reader.readLine()).append("\r\n");
             return true;
         } catch (FileNotFoundException e) {
             setNotification("File not found, try again", "RED");
@@ -37,17 +38,17 @@ public class Controller {
     }
 
     public void bruteForce() {
-        if (connectFile())
+        if (connectFile(textPath, cryptoText))
             fileWrite(-33,32);
     }
 
     public void encrypt() {
-        if (getKey() != 0 & connectFile())
+        if (getKey() != 0 & connectFile(textPath, cryptoText))
             fileWrite(getKey(), 0);
     }
 
     public void decrypt() {
-        if (getKey() != 0 & connectFile())
+        if (getKey() != 0 & connectFile(textPath, cryptoText))
             fileWrite(-getKey(), 0);
     }
 
@@ -87,14 +88,15 @@ public class Controller {
 
             for (int k = mode; k > -1; k--) {
                 for (int i = 0; i < cryptoText.length(); i++)
-                    crypto.append(alphabet.symbolShift(cryptoText.charAt(i), key + k));
+                    crypto.append(Alphabet.symbolShift(cryptoText.charAt(i), key + k));
 
-                if (mode == 32)
+                if (mode == 32) {
                     if (bruteForce.autoKey(String.valueOf(crypto))) {
                         notificationKey = "key = " + Math.abs(key + k);
                         break;
                     } else
                         crypto.setLength(0);
+                }
             }
             if (crypto.length() > 0) {
                 writer.write(String.valueOf(crypto));
@@ -108,5 +110,10 @@ public class Controller {
 
     public void showInfo() {
         textInfo.setVisible(!textInfo.isVisible());
+    }
+
+    public void staticalAnalysis() {
+        if (connectFile(textPathAnalysis, textForAnalysis) & connectFile(textPath, cryptoText))
+            fileWrite(StaticalAnalysis.getKey(String.valueOf(textForAnalysis)), 0);
     }
 }
