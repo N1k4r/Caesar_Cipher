@@ -8,7 +8,6 @@ import javafx.stage.Stage;
 import java.io.*;
 
 public class Controller {
-    BruteForce bruteForce = new BruteForce();
     private StringBuilder cryptoText = new StringBuilder();
     private StringBuilder textForAnalysis = new StringBuilder();
     @FXML
@@ -39,17 +38,17 @@ public class Controller {
 
     public void bruteForce() {
         if (connectFile(textPath, cryptoText))
-            fileWrite(-33,32);
+            fileWrite(BruteForce.getKey(String.valueOf(cryptoText)));
     }
 
     public void encrypt() {
         if (getKey() != 0 & connectFile(textPath, cryptoText))
-            fileWrite(getKey(), 0);
+            fileWrite(getKey());
     }
 
     public void decrypt() {
         if (getKey() != 0 & connectFile(textPath, cryptoText))
-            fileWrite(-getKey(), 0);
+            fileWrite(-getKey());
     }
 
     public String directorySave(){
@@ -80,29 +79,16 @@ public class Controller {
         }
     }
 
-    public void fileWrite(int key, int mode){
+    public void fileWrite(int key){
         String directory = directorySave();
         String notificationKey = "";
         try(BufferedWriter writer = new BufferedWriter(new FileWriter(directory))){
             StringBuilder crypto = new StringBuilder();
 
-            for (int k = mode; k > -1; k--) {
-                for (int i = 0; i < cryptoText.length(); i++)
-                    crypto.append(Alphabet.symbolShift(cryptoText.charAt(i), key + k));
-
-                if (mode == 32) {
-                    if (bruteForce.autoKey(String.valueOf(crypto))) {
-                        notificationKey = "key = " + Math.abs(key + k);
-                        break;
-                    } else
-                        crypto.setLength(0);
-                }
-            }
-            if (crypto.length() > 0) {
-                writer.write(String.valueOf(crypto));
-                setNotification("File saved! " + notificationKey, "GREEN");
-            } else
-                setNotification("Incorrect text formatting", "RED");
+            for (int i = 0; i < cryptoText.length(); i++)
+                crypto.append(Alphabet.symbolShift(cryptoText.charAt(i), key));
+            writer.write(String.valueOf(crypto));
+            setNotification("File saved! " + notificationKey, "GREEN");
         } catch (IOException e) {
             setNotification("Failed to create file, try change directory", "RED");
         }
@@ -114,6 +100,6 @@ public class Controller {
 
     public void staticalAnalysis() {
         if (connectFile(textPathAnalysis, textForAnalysis) & connectFile(textPath, cryptoText))
-            fileWrite(StaticalAnalysis.getKey(String.valueOf(textForAnalysis)), 0);
+            fileWrite(StaticalAnalysis.getKey(String.valueOf(textForAnalysis)));
     }
 }

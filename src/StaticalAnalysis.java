@@ -1,10 +1,10 @@
 public class StaticalAnalysis {
-    public static int getKey(String file){
+    public static int getKey(String textFile){
         int maxValue = 0;
         int[] numberOfLetters = new int[Alphabet.ALPHABET.length];
-        for (int i = 0; i < file.length(); i++) {
+        for (int i = 0; i < textFile.length(); i++) {
             for (int j = 0; j < Alphabet.ALPHABET.length; j++) {
-                if (file.charAt(i) == Alphabet.ALPHABET[j])
+                if (textFile.charAt(i) == Alphabet.ALPHABET[j])
                     if (++numberOfLetters[j] > numberOfLetters[maxValue])
                         maxValue = j;
             }

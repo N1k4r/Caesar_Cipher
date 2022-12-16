@@ -1,21 +1,19 @@
+import java.util.Arrays;
+import java.util.List;
+
 public class BruteForce {
-    private final char[] punctuation = ".,:!?".toCharArray();
-    public boolean autoKey(String text){
-        text = text.substring(0 , text.indexOf("\r\n"));
-        return rule1(text) & rule2(text);
-    }
+    private static final List<String> WORDS = Arrays.asList("the", "for", "were", "was", "that", "will");
+    public static int getKey(String textFile){
+        for (int i = 1; i < 33; i++) {
+            StringBuilder decryptText = new StringBuilder();
 
-    private boolean rule1(String text){
-        boolean rule = true;
-        for (int i = 0; i < text.length() - 1; i++)
-            for (char mark : punctuation)
-                if (text.charAt(i) == mark)
-                    if (text.charAt(i + 1) != ' ')
-                        return false;
-        return rule;
-    }
+            for (int j = 0; j < textFile.length(); j++)
+                decryptText.append(Alphabet.symbolShift(textFile.charAt(j), -i));
 
-    private boolean rule2(String text){
-        return text.endsWith(".") || text.endsWith("!") || text.endsWith("?");
+            String[] words = decryptText.toString().split("\\W");
+            for (String word : words)
+                if (WORDS.contains(word.toLowerCase()))
+                    return -i;
+        } return 0;
     }
 }
