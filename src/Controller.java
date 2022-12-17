@@ -51,7 +51,12 @@ public class Controller {
             fileWrite(-getKey());
     }
 
-    public String directorySave(){
+    public void staticalAnalysis() {
+        if (connectFile(textPathAnalysis, textForAnalysis) & connectFile(textPath, cryptoText))
+            fileWrite(StaticalAnalysis.getKey(String.valueOf(textForAnalysis)));
+    }
+
+    private String directorySave(){
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choose directory for save");
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Text file", "*.txt"));
@@ -59,12 +64,12 @@ public class Controller {
         return selectedFile.getPath();
     }
 
-    public void setNotification(String notification, String color){
+    private void setNotification(String notification, String color){
         textNotification.setText(notification);
         textNotification.setFill(Paint.valueOf(color));
     }
 
-    public int getKey(){
+    private int getKey(){
         try {
             int num = Math.abs(Integer.parseInt(textKey.getText())) % 33;
             if (num != 0)
@@ -79,16 +84,15 @@ public class Controller {
         }
     }
 
-    public void fileWrite(int key){
+    private void fileWrite(int key){
         String directory = directorySave();
-        String notificationKey = "";
         try(BufferedWriter writer = new BufferedWriter(new FileWriter(directory))){
             StringBuilder crypto = new StringBuilder();
 
             for (int i = 0; i < cryptoText.length(); i++)
                 crypto.append(Alphabet.symbolShift(cryptoText.charAt(i), key));
             writer.write(String.valueOf(crypto));
-            setNotification("File saved! " + notificationKey, "GREEN");
+            setNotification("File saved! " + "key = " + key, "GREEN");
         } catch (IOException e) {
             setNotification("Failed to create file, try change directory", "RED");
         }
@@ -98,8 +102,5 @@ public class Controller {
         textInfo.setVisible(!textInfo.isVisible());
     }
 
-    public void staticalAnalysis() {
-        if (connectFile(textPathAnalysis, textForAnalysis) & connectFile(textPath, cryptoText))
-            fileWrite(StaticalAnalysis.getKey(String.valueOf(textForAnalysis)));
-    }
+
 }
