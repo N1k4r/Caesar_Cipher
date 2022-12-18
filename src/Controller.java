@@ -92,7 +92,7 @@ public class Controller {
             for (int i = 0; i < cryptoText.length(); i++)
                 crypto.append(Alphabet.symbolShift(cryptoText.charAt(i), key));
             writer.write(String.valueOf(crypto));
-            setNotification("File saved! " + "key = " + key, "GREEN");
+            setNotification("File saved! " + "key = " + Math.abs(key), "GREEN");
         } catch (IOException e) {
             setNotification("Failed to create file, try change directory", "RED");
         }
