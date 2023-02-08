@@ -1,5 +1,5 @@
 public class Alphabet {
-    final public static char[] ALPHABET = "abcdefghijklmnopqrstuvwxyz.,\":!? ".toCharArray();
+    public static final char[] ALPHABET = "abcdefghijklmnopqrstuvwxyz.,\":!? ".toCharArray();
 
     private static int getPosition(char symbol) {
         for (int i = 0; i < ALPHABET.length; i++)

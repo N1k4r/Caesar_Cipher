@@ -1,5 +1,4 @@
 import javafx.fxml.FXML;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
@@ -16,8 +15,6 @@ public class Controller {
     private TextField textPathAnalysis;
     @FXML
     private Text textNotification;
-    @FXML
-    private TextArea textInfo;
     @FXML
     private TextField textPath;
 
@@ -42,17 +39,17 @@ public class Controller {
     }
 
     public void encrypt() {
-        if (getKey() != 0 & connectFile(textPath, cryptoText))
+        if (getKey() != 0 && connectFile(textPath, cryptoText))
             fileWrite(getKey());
     }
 
     public void decrypt() {
-        if (getKey() != 0 & connectFile(textPath, cryptoText))
+        if (getKey() != 0 && connectFile(textPath, cryptoText))
             fileWrite(-getKey());
     }
 
     public void staticalAnalysis() {
-        if (connectFile(textPathAnalysis, textForAnalysis) & connectFile(textPath, cryptoText))
+        if (connectFile(textPathAnalysis, textForAnalysis) && connectFile(textPath, cryptoText))
             fileWrite(StaticalAnalysis.getKey(String.valueOf(textForAnalysis)));
     }
 
@@ -97,10 +94,4 @@ public class Controller {
             setNotification("Failed to create file, try change directory", "RED");
         }
     }
-
-    public void showInfo() {
-        textInfo.setVisible(!textInfo.isVisible());
-    }
-
-
 }
